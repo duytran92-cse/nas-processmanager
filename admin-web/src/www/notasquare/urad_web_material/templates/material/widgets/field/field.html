@@ -1,0 +1,12 @@
+<label class="c-black">{{ field.label }}{% if field.is_required %}&nbsp;<b style="color:red">*</b>{% endif %}</label>
+<div class="fg-line {% if field.errors %}has-error{% endif %}">
+    {% block field_widget %}
+    {% endblock %}
+</div>
+{% if field.errors %}
+    <div class="has-error">
+        {% for error in field.errors %}
+            <small class="help-block">{{ error }}</small>
+        {% endfor %}
+    </div>
+{% endif %}

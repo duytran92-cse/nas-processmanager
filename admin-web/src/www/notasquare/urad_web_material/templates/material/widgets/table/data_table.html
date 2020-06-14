@@ -1,0 +1,53 @@
+<div class="card">
+    <div class="card-header">
+        <h2>{{ title }}<small>{{ subtitle }}</small></h2>
+        <ul class="actions">
+            <li>
+                {% for button in buttons %}
+                    <a href="{{ button.url }}"><i class="zmdi {{ button.iclass }}"></i></a>
+                {% endfor %}
+            </li>
+        </ul>
+    </div>
+
+    {{ table_form_html }}
+
+    <div class="table-responsive dataTables_wrapper">
+        <table id="data-table-basic" class="table table-hover table-condensed dataTable">
+            <thead>
+                <tr>
+                    {% for column in columns %}
+                        <th width="{{ column.width }}" class="{% if column.sortable %}{% if column.sort_dir != '' %}sorting_{{ column.sort_dir }}{% else %}sorting{% endif %}{% endif %}" {% if column.sortable %}sortable="sortable" sortkey="{{ column.name }}" sortdir="{{ column.sort_dir }}"{% endif %}>
+                            {{ column.title }}
+                        </th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {{ rows_html | safe }}
+            </tbody>
+        </table>
+
+        <div class="dataTables_info">Showing {{ start_record_index }} to {{ end_record_index }} of {{ total_records }} entries</div>
+        <div class="dataTables_paginate paging_simple_numbers">
+            <a href="{% if current_page == 1 %}#{% else %}?subact=change_page&page={{ previous_page_i }}{% endif %}" class="paginate_button previous {% if current_page == 1 %}disabled{% endif %}">Previous</a>
+            <span>
+                {% for i in pages_range %}
+                    <a href="?subact=change_page&page={{ i }}" class="paginate_button {% if current_page == i %}current{% endif %}">{{ i }}</a>
+                {% endfor %}
+            </span>
+            <a href="{% if current_page == total_pages %}#{% else %}?subact=change_page&page={{ next_page_i }}{% endif %}" class="paginate_button next {% if current_page == total_pages %}disabled{% endif %}">Next</a>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            jQuery('#data-table-basic th[sortable=sortable]').click(function() {
+                var sortkey = jQuery(this).attr('sortkey');
+                var sortdir = jQuery(this).attr('sortdir');
+                sortdir = (sortdir == '' || sortdir == 'asc') ? 'desc' : 'asc';
+                document.location = '?subact=change_sort&sortkey=' + sortkey + '&sortdir=' + sortdir
+            });
+        });
+    </script>
+</div>

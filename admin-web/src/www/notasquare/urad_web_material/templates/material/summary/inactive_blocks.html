@@ -1,0 +1,21 @@
+<div class="card">
+    <div class="card-header card-padding">
+        <h2>Pending ({{ inactive_blocks_version|length }}/{{ total_inactive_blocks_version }})</h2>
+        <ul class="actions">
+        </ul>
+    </div>
+    <div class="tv-comments">
+        <ul class="tvc-lists">
+            {% for item in inactive_blocks_version %}
+                <li class="media">
+                    <div class="media-body">
+                        <a class="btn btn-xs btn-info waves-effect pull-right" href="/{{ page }}/detail/{{ item.page_id }}/block/detail/{{ item.page_block_id }}/version/active_sum/{{ item.id }}">Approved</a>
+                        <strong class="d-block">{{ item.title }}</strong>
+                        <div class="m-t-10">{{ item.timestamp }}</div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        <a class="view-more" href="/{{ page }}/detail/{{ page_id }}/block/list">View All</a>
+    </div>
+</div>

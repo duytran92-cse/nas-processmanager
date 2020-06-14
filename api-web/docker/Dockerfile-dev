@@ -1,0 +1,8 @@
+FROM registry.novogenialab.com/notasquare-zero/images/nas-urad-api:0.1
+
+RUN mkdir /opt/kubernetes
+ADD docker/keys/apiserver-ca.pem /opt/kubernetes/apiserver-ca.pem
+ADD docker/keys/apiserver-cert.pem /opt/kubernetes/apiserver-cert.pem
+ADD docker/keys/apiserver-key.pem /opt/kubernetes/apiserver-key.pem
+
+ENV APP_ENV dev

@@ -1,0 +1,23 @@
+<div class="card">
+    <div class="card-header card-padding">
+        <h2>Approved ({{ active_blocks_version|length }}/{{ total_active_blocks_version }})</h2>
+        <ul class="actions">
+            
+        </ul>
+    </div>
+    <div class="card-body">
+        <div class="list-group">
+          <table id="data-table-basic" class="table table-hover table-condensed dataTable">
+            <tbody>
+              {% for item in active_blocks_version %}
+                <tr>
+                  <td>{{ item.kind }}</td>
+                  <td>{{ item.title }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <a class="view-more" href="/{{ page }}/detail/{{ page_id }}/block/list">View All</a>
+        </div>
+    </div>
+</div>

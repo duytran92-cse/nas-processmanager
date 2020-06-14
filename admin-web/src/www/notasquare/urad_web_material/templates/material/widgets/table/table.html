@@ -1,0 +1,27 @@
+<div class="card">
+    <div class="card-header">
+        <h2>{{ title }}<small>{{ subtitle }}</small></h2>
+        <ul class="actions">
+            <li>
+                {% for button in buttons %}
+                    <a href="{{ button.url }}"><i class="zmdi {{ button.iclass }}"></i></a>
+                {% endfor %}
+            </li>
+        </ul>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover table-condensed">
+            <thead>
+                <tr>
+                    {% for column in columns %}
+                        <th width="{{ column.width }}">{{ column.title }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {{ rows_html | safe }}
+            </tbody>
+        </table>
+    </div>
+</div>

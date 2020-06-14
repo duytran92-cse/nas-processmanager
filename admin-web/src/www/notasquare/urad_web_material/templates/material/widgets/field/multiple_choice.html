@@ -1,0 +1,8 @@
+{% extends 'material/widgets/field/field.html' %}
+{% block field_widget %}
+    <select multiple style="height: 200px" class="form-control" name="{{ field.id }}[]" id="{{ field.id }}">
+        {% for choice in field.choices %}
+            <option value="{{ choice.id }}" {% if choice.id in field.data %}selected{% endif %}>{{ choice.label }}</option>
+        {% endfor %}
+    </select>
+{% endblock %}

@@ -1,0 +1,105 @@
+{% load js %}
+<div class="row">
+    <div class="card">
+      <div class="card-header">
+          <h2>Valiation page - {{ unstable.0.page|upper }}<small> {{ unstable.0.kind }}</small></h2>
+      </div>
+      <div class="card-body">
+          <table class="table table-inner table-condensed" style="table-layout: fixed;">
+              <tbody>
+                {% if unstable %}
+                  <tr>
+                      <td width="5%"></td>
+                      <td style="text-align: center"><label>Unstable block version</label></td>
+                      <td style="text-align: center"><label>Previous stable version</label></td>
+                  </tr>
+                      {% for key,value in unstable.0.items %}
+                        {% if key != 'kind' and key != 'page' and key != 'title' %}
+                          <tr>
+                              <td width="5%" style="text-align: right">{{ key }}</td>
+                              <td width="40%" style="text-align: center">
+                                {% if value|is_array %}
+                                <!-- value is array -->
+                                    {% for k in value %}
+                                      &nbsp;&nbsp;{{ k }}<br>
+                                    {% endfor %}
+                                <!-- /end value is array -->
+
+                                {% elif value|is_dict %}
+                                <!-- value is dict -->
+                                    <table class="table-inner table-condensed" style="width: 100%;margin-top: -8px; text-align: left;table-layout: fixed; margin-left: 10px;">
+                                      <tbody>
+                                        <tr>
+                                          {% for k in value.header %}
+                                              <th>{{ k }}</th>
+                                          {% endfor %}
+                                        </tr>
+                                        {% for k in value.content %}
+                                            {{ k|safe }}
+                                        {% endfor %}
+                                      </tbody>
+                                    </table>
+                                <!-- /end value is dict -->
+
+                                {% else %}
+                                <!-- value is string -->
+                                  {{ value|safe }}
+                                <!-- /end value is string -->
+                                {% endif %}
+
+                              </td>
+                              <td width="40%" style="text-align: center">
+
+                                  {% if stable.0|get:key|is_array %}
+                                  <!-- value is array -->
+                                      {% for k in value %}
+                                        &nbsp;&nbsp;{{ k }}<br>
+                                      {% endfor %}
+                                  <!-- /end value is array -->
+
+                                  {% elif stable.0|get:key|is_dict %}
+                                  <!-- value is dict -->
+                                      <table class="table-inner table-condensed" style="width: 100%;margin-top: -8px; text-align: left;table-layout: fixed; margin-left: 10px;">
+                                        <tbody>
+                                          <tr>
+                                            {% for k in stable.0|get:key|get:'header' %}
+                                                <th>{{ k }}</th>
+                                            {% endfor %}
+                                          </tr>
+                                          {% for k in stable.0|get:key|get:'content' %}
+                                              {{ k|safe }}
+                                          {% endfor %}
+                                        </tbody>
+                                      </table>
+                                  <!-- /end value is dict -->
+
+                                  {% else %}
+                                  <!-- value is string -->
+                                    {{ stable.0|get:key|safe }}
+                                  <!-- /end value is string -->
+                                  {% endif %}
+
+                              </td>
+                          </tr>
+                        {% endif %}
+                      {% endfor %}
+                  <tr>
+                      <td width="10%" style="text-align: right"></td>
+                      <td width="30%" style="text-align: center">
+                        <div class="pull-right btn-group">
+                          <a href="/page/block_approve/{{ unstable.0.page }}/{{ unstable.0.kind }}/{{ unstable.0.id }}" class="btn btn-primary btn-sm waves-effect" style="margin-right: 10px">Approve</a>
+                          <a href="/page/block_reject/{{ unstable.0.page }}/{{ unstable.0.kind }}/{{ unstable.0.id }}" class="btn btn-danger btn-sm waves-effect">Reject</a>
+                        </div>
+                      </td>
+                      <td width="30%" style="text-align: center"></td>
+                  </tr>
+                  {% else %}
+                  <tr>
+                    <td>No new blocks version</td>
+                  </tr>
+                  {% endif %}
+              </tbody>
+          </table>
+      </div>
+    </div>
+</div>

@@ -1,0 +1,4 @@
+{% extends 'material/widgets/field/field.html' %}
+{% block field_widget %}
+    <input type="text" class="form-control" name="{{ field.id }}" value="{{ field.data | escape }}" />
+{% endblock %}

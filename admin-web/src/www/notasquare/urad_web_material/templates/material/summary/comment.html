@@ -1,0 +1,23 @@
+<div class="card">
+    <div class="card-header card-padding">
+        <h2>Comments ({{ comments|length }}/{{ total_comments }})</h2>
+        <ul class="actions">
+            <li><a href="/{{ page }}/detail/{{ page_id }}/comment/create"><i class="zmdi zmdi-plus"></i></a></li>
+        </ul>
+    </div>
+
+    <div class="tv-comments">
+        <ul class="tvc-lists">
+            {% for comment in comments %}
+                <li class="media">
+                    <div class="media-body">
+                        <small class="c-gray pull-right">{{ comment.timestamp }}</small>
+                        <strong class="d-block">{{ comment.user }}</strong>
+                        <div class="m-t-10">{{ comment.comment }}</div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        <a href="/{{ page }}/detail/{{ page_id }}/comment/list" class="view-more">View all {{ request.num_comment }} comment(s)</a>
+    </div>
+</div>

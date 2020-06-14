@@ -1,0 +1,88 @@
+{% load js %}
+<div class="card">
+    <div class="card-header card-padding">
+        <h2>Blocks ({{ blocks|length }}/{{ total_blocks }})</h2>
+        <ul class="actions">
+            <li><a href="/{{ page }}/detail/{{ page_id }}/block/create"><i class="zmdi zmdi-plus"></i></a></li>
+        </ul>
+    </div>
+
+    <div class="tv-comments">
+        <ul class="tvc-lists">
+            {% for item in blocks %}
+                {% if item.position == 'main' %}
+                    <li class="media {% if item.active_version < item.latest_version %} hight-light-block {% endif %}">
+                        <div class="media-body">
+                            <label class="c-gray pull-right"><a href="/{{ page }}/detail/{{ item.page_id }}/block/update/{{ item.id }}">Edit</a></label>
+                            <strong class="d-block">{{ item.kind | filter }}</strong>
+                            <div class="m-t-10">{{ item.title }}</div>
+                            <div class="row">
+                                <div class="col-md-5"> Active version: {{ item.active_version }} </div>
+                                <div class="col-md-5"> Latest version: {{ item.latest_version }} </div>
+                                <div class="col-md-2">
+                                    {% if item.active_version != item.latest_version %}
+                                       <label class="c-gray pull-right"><a href="/page/validation/{{ page }}/{{ item.id }}">Validation page</a></label>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <br/>
+        <div class="row">
+            <div class="col-md-7">
+                <ul class="tvc-lists">
+                    {% for item in blocks %}
+                        {% if item.position == 'left' %}
+                            <li class="media {% if item.active_version < item.latest_version %} hight-light-block {% endif %}">
+                                <div class="media-body">
+                                    <label class="c-gray pull-right"><a href="/{{ page }}/detail/{{ item.page_id }}/block/update/{{ item.id }}">Edit</a></label>
+                                    <strong class="d-block">{{ item.kind | filter }}</strong>
+                                    <div class="m-t-10">{{ item.title }}</div>
+                                    <div class="row">
+                                        <div class="col-md-6"> Active version: {{ item.active_version }} </div>
+                                        <div class="col-md-6"> Latest version: {{ item.latest_version }} </div>
+                                    </div>
+                                     {% if item.active_version != item.latest_version %}
+                                        <label class="c-gray pull-right"><a href="/page/validation/{{ page }}/{{ item.id }}">Validation page</a></label>
+                                     {% endif %}
+                                </div>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-md-5">
+                <ul class="tvc-lists">
+                    {% for item in blocks %}
+                        {% if item.position == 'right' %}
+                            <li class="media {% if item.active_version < item.latest_version %} hight-light-block {% endif %}">
+                                <div class="media-body">
+                                    <label class="c-gray pull-right"><a href="/{{ page }}/detail/{{ item.page_id }}/block/update/{{ item.id }}">Edit</a></label>
+                                    <strong class="d-block">{{ item.kind | filter }}</strong>
+                                    <div class="m-t-10">{{ item.title }}</div>
+                                    <div class="row">
+                                        <div class="col-md-6"> Active version: {{ item.active_version }} </div>
+                                        <div class="col-md-6"> Latest version: {{ item.latest_version }} </div>
+                                    </div>
+                                    {% if item.active_version != item.latest_version %}
+                                       <label class="c-gray pull-right"><a href="/page/validation/{{ page }}/{{ item.id }}">Validation page</a></label>
+                                    {% endif %}
+                                </div>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.hight-light-block {
+    background-color: #EEEEEE !important;
+    border-color: #fff !important;
+}
+</style>

@@ -1,0 +1,63 @@
+<div class="row">
+    <!-- List all unverified blocks -->
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header card-padding">
+                <h2>Unverified blocks ({{ records|length }})</h2>
+            </div>
+
+            <div class="tv-comments">
+                <ul class="tvc-lists">
+                    {% for item in records %}
+                        <li class="media">
+                            <div class="media-body">
+                                <small class="c-gray pull-right">{{ item.timestamp }}</small>
+                                <strong class="d-block">{{ item.title }}</strong>
+                                <div class="m-t-10">{{ item.page }} - {{ item.kind }}</div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+            </div>
+        </div>
+    </div>
+    <!-- /List all unstable blocks -->
+    <div class="col-md-4">
+      <!-- Tool box -->
+      <div class="card">
+            <div class="card-header card-padding">
+                <h2>Toolbox</h2>
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+                  <label><a style="margin-left: 30px" href="/page/validation">Open validation page</a> </label>
+                  <a class="view-more" href="#"></a>
+                </div>
+            </div>
+        </div>
+        <!-- /Tool box -->
+        <!-- Front-end dashboard -->
+        <div class="card">
+            <div class="card-header">
+                <h2>Statistics<small>List of pages</small></h2>
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+                    {% for link in links %}
+                        <a target="_blank" href="{{ link.link }}" class="list-group-item media">
+                            <div class="media-body">
+                                <div class="pull-right">
+                                    {{ link.tags }}
+                                </div>
+                                <div class="lgi-heading">{{ link.title }}</div>
+                                <small>{{ link.description }}</small>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <!-- /front-end dashboard -->
+    </div>
+</div>

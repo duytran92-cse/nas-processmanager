@@ -1,0 +1,24 @@
+<ul class="main-menu" style="margin-top: 0px">
+     {% for group in menu.groups %}
+        {% if group.entries|length == 0  %}
+            <li class="{% if group.name == menu.group_selected %}active{% endif %}">
+                <a href="{{ group.url }}">
+                    <i class="zmdi {{ group.iclass }}"></i>{{ group.title }} 
+                </a>
+            </li>
+        {% else %}
+            <li class="sub-menu {% if menu.selected %}active{% endif %}">
+                <a href="{{ group.url }}" data-ma-action="submenu-toggle">
+                    <i class="zmdi {{ group.iclass }}"></i>{{ group.title }}
+                </a>
+                <ul>
+                    {% for entry in group.entries %}
+                        <li {% if entry.name == menu.entry_selected %}class="active"{% endif %}>
+                            <a href="{{ entry.url }}">{{ entry.title }} </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endif %}
+    {% endfor %}
+</ul>

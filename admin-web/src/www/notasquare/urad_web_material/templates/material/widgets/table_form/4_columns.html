@@ -1,0 +1,19 @@
+<form id="{{ form_id }}" action="" method="POST">
+    <div class="card-body card-padding" style="padding-top: 0px; padding-bottom: 5px">
+        <div class="row">
+            {{ form_html | safe }}
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="pull-right btn-group">
+                    {% block buttons %}
+                        {% spaceless %}
+                            <a id="btn_clear" href="?subact=clear_form" class="btn btn-default btn-icon-text waves-effect"><i class="zmdi zmdi-close"></i>Clear</a>
+                            <button id="btn_submit" type="submit" class="btn btn-default btn-icon-text waves-effect"><i class="zmdi zmdi-search"></i>Search</button>
+                        {% endspaceless %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

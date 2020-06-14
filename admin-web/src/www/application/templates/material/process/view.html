@@ -1,0 +1,25 @@
+<div class="block-header">
+    <h2>Process</h2>
+    <ul class="actions">
+        <div class="btn-group btn-group" id="action_follow_stream"><a class="btn btn-xs btn-primary">Follow stream</a></div>
+        <li><a href="/process/view/{{ process.id }}"><i class="zmdi zmdi-refresh"></i></a></li>
+    </ul>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <pre style="font-family: monospace; border: 1px solid white; background-color: white; color: black; border-radius: 0px; margin: 0px">ID: {{ process.id }}
+Timestamp: {{ process.timestamp }}
+Command: {{ process.command_label }}
+Pod: {{ process.pod_id }}
+                    <div id="process_status" value= {{ process.status }}>Status: {{ process.status }}</div>
+                    <div id="process_message" value= {{ process.status }}>Message: {{ process.message }}</div>
+---------------------------
+CONSOLE OUTPUT:
+                </pre>
+                <pre style="font-family: monospace; border: 1px solid white; background-color: white; color: black; border-radius: 0px" id="follow_log_stream">{{ process.log }}</pre>
+            </div>
+        </div>
+    </div>
+</div>

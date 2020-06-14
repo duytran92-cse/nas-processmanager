@@ -1,0 +1,4 @@
+{% extends 'material/widgets/field/field.html' %}
+{% block field_widget %}
+    <textarea type="textarea" class="form-control" rows="{{ options.rows }}" name="{{ field.id }}">{{ field.data | escape }}</textarea>
+{% endblock %}

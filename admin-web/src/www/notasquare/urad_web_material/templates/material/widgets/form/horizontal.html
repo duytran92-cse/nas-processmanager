@@ -1,0 +1,44 @@
+<form id="{{ form_id }}" action="" method="POST">
+    {% for message in messages %}
+        <div class="alert alert-{{ message.type }}">{{ message.message | safe }}</div>
+    {% endfor %}
+    <div class="card">
+        {% if tabs %}
+            <div role="tabpanel">
+                <ul class="tab-nav" role="tablist">
+                    {% for tab in tabs %}
+                        <li {% if tab.id == active_tab %}class="active"{% endif %}>
+                            <a href="{{ tab.url }}" role="tab">{{ tab.label }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        {% if title %}
+            <div class="card-header">
+                <h2>{{ title }}</h2>
+            </div>
+        {% endif %}
+
+        <div class="card-body card-padding">
+            {{ form_html | safe }}
+            {% block post_fields %}
+            {% endblock %}
+        </div>
+
+        {% block form_footer %}
+        {% endblock %}
+    </div>
+
+    <div class="pull-right btn-group">
+        {% block buttons %}
+            {% spaceless %}
+                {% for btn in buttons %}
+                    <button id="{{ btn.id }}" class="btn btn-sm {{ btn.class }}">{{ btn.label }}</button>
+                {% endfor %}
+                <button id="btn_submit" type="submit" href="#" class="btn btn-primary btn-sm">Submit</button>
+            {% endspaceless %}
+        {% endblock %}
+    </div>
+</form>

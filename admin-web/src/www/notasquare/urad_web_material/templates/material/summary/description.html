@@ -1,0 +1,48 @@
+<div class="card">
+    <div class="card-header card-padding">
+        <h2>{{ page|title }} info</h2>
+        <ul class="actions">
+            <li><a href="/{{ page }}/update/{{ page_id }}"><i class="zmdi zmdi-edit"></i></a></li>
+        </ul>
+    </div>
+    <div class="card-body">
+        <table class="table table-inner table-condensed">
+            <tbody>
+                <tr>
+                    <td width="20%" style="text-align: right">Title</td>
+                    <td width="30%">{{ title }}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                {% if page_gene %}
+                <tr>
+                    <td width="20%" style="text-align: right">Genes</td>
+                    <td width="30%">{{ page_gene }}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                {% endif %}
+                {% if page_pub %}
+                <tr>
+                    <td width="20%" style="text-align: right">Publications</td>
+                    <td width="30%">
+                      {% for item in page_pub %}
+                        <a href="{{ item }}">{{ item }}</a></br>
+                      {% endfor %}
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                {% endif %}
+                {% if page_disease %}
+                <tr>
+                    <td width="20%" style="text-align: right">Diseases</td>
+                    <td width="30%">{{ page_disease }}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+      </div>
+</div>

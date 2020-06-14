@@ -1,0 +1,65 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: notasquare-zero
+  name: notasquare-zero-process-manager-mysql-pvc
+  labels:
+    name: notasquare-zero-process-manager-mysql-pvc
+    code: notasquare-zero-process-manager-mysql
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: extensions/v1beta1
+kind: ReplicaSet
+metadata:
+  namespace: notasquare-zero
+  name: notasquare-zero-services-manager-mysql-replicaset
+  labels:
+    name: notasquare-zero-process-manager-mysql-replicaset
+    code: notasquare-zero-process-manager-mysql
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: notasquare-zero-process-manager-mysql-pod
+        code: notasquare-zero-process-manager-mysql
+    spec:
+      containers:
+      - name: mysql
+        image: registry.novogenialab.com/notasquare-zero/images/standard-mysql:0.1
+        resources:
+          requests:
+            cpu: 50m
+            memory: 100Mi
+          limits:
+            cpu: 200m
+            memory: 400Mi
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - name: notasquare-zero-process-manager-mysql-ps
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: notasquare-zero-process-manager-mysql-ps
+        persistentVolumeClaim:
+          claimName: notasquare-zero-process-manager-mysql-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: notasquare-zero
+  name: notasquare-zero-process-manager-mysql-service
+  labels:
+    name: notasquare-zero-process-manager-mysql-service
+    code: notasquare-zero-process-manager-mysql
+spec:
+  ports:
+  - port: 3306
+    targetPort: 3306
+  selector:
+    name: notasquare-zero-process-manager-mysql-pod

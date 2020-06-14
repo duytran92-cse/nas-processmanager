@@ -1,0 +1,73 @@
+{% extends 'material/widgets/field/field.html' %}
+{% block field_widget %}
+    <table class="table table-condensed table-field-list" name="{{ field.id }}" id="{{ field.id }}">
+        <thead>
+            <tr>
+                {% for column in columns %}
+                    <th width="{{ column.width }}">{{ column.label }}</th>
+                {% endfor %}
+                <th width="10%"></th>
+            </tr>
+        </thead>
+        <tbody id="{{ field.id }}_container" current-index="{{ current_row_index }}">
+            {{ row_htmls | safe }}
+        </tbody>
+        <tfoot>
+            <tr>
+                {% for column in columns %}
+                    <td></td>
+                {% endfor %}
+                <td style="padding-top: 20px">
+                    <a id="{{ field.id}}_add_new" href="javascript:field_list_add_new('{{ field.id }}')" class="pull-right btn btn-xs btn-default btn-icon-text waves-effect">
+                        <i class="zmdi zmdi-plus"></i>Add new row
+                    </a>
+                </td>
+            </tr>
+        </tfoot>
+        <input type="hidden" id="{{ field.id }}_sort_order" name="{{ field.id }}_sort_order" value="" />
+    </table>
+    <div style="display: none" id="{{ field.id }}_prototype" data-prototype="{{ row_html_prototype }}"></div>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            field_list_update_sort_order('{{ field.id }}');
+        });
+        function field_list_update_sort_order(field_id) {
+            var container = jQuery('#' + field_id + '_container');
+            var sort_order = '';
+            container.find('tr').each(function() {
+                sort_order += jQuery(this).attr('row-index') + ',';
+            });
+            jQuery('#' + field_id + '_sort_order').val(sort_order);
+        }
+        function field_list_create_row(field_id) {
+            var container = jQuery('#' + field_id + '_container');
+            var current_row_index = parseInt(container.attr('current-index'));
+            container.attr('current-index', current_row_index + 1);
+
+            var prototype_html = jQuery('#' + field_id + '_prototype').attr('data-prototype');
+            prototype_html = prototype_html.replace(/__ROW_INDEX__/g, current_row_index);
+
+            var new_row = jQuery(prototype_html);
+            return new_row;
+        }
+        function field_list_add_new(field_id) {
+            var container = jQuery('#' + field_id + '_container');
+            var new_row = field_list_create_row(field_id);
+            container.append(new_row);
+            field_list_update_sort_order(field_id);
+        }
+        function field_list_insert(field_id, row_index) {
+            var container = jQuery('#' + field_id + '_container');
+            var target_row = container.find('tr[row-index="' + row_index + '"]');
+            var new_row = field_list_create_row(field_id)
+            new_row.insertBefore(target_row);
+            field_list_update_sort_order(field_id);
+        }
+        function field_list_remove(field_id, row_index) {
+            var container = jQuery('#' + field_id + '_container');
+            container.find('tr[row-index="' + row_index + '"]').remove();
+            field_list_update_sort_order(field_id);
+        }
+    </script>
+{% endblock %}

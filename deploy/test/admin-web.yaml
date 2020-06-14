@@ -1,0 +1,74 @@
+apiVersion: extensions/v1beta1
+kind: ReplicaSet
+metadata:
+  namespace: notasquare-zero
+  name: notasquare-zero-process-manager-admin-deployment
+  labels:
+    name: notasquare-zero-process-manager-admin-deployment
+    code: notasquare-zero-process-manager-admin
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: notasquare-zero-process-manager-admin-pod
+        code: notasquare-zero-process-manager-admin
+    spec:
+      containers:
+      - name: master
+        image: registry.novogenialab.com/genopedia/process-manager/admin-web/test:latest
+        resources:
+          requests:
+            cpu: 50m
+            memory: 100Mi
+          limits:
+            cpu: 200m
+            memory: 400Mi
+        env:
+        - name: MYSQL_NAME
+          value: admin_db
+        - name: MYSQL_USER
+          value: root
+        - name: MYSQL_PASS
+          value: '123456'
+        - name: MYSQL_HOST
+          value: notasquare-zero-process-manager-mysql-service
+        - name: MYSQL_PORT
+          value: '3306'
+        - name: JOB_MANAGER_API_HOST
+          value: notasquare-zero-process-manager-api-service
+        - name: JOB_MANAGER_API_PORT
+          value: '80'
+        ports:
+        - containerPort: 3306
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: notasquare-zero
+  name: notasquare-zero-services-manager-admin-web-service
+  labels:
+    name: notasquare-zero-process-manager-admin-service
+    code: notasquare-zero-process-manager-admin
+spec:
+  ports:
+  - name: web
+    port: 80
+    targetPort: 80
+  selector:
+    name: notasquare-zero-process-manager-admin-pod
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  namespace: notasquare-zero
+  name: notasquare-zero-process-manager-admin-ingress
+spec:
+  rules:
+    - host: process-manager-admin.nasz.test.notasquare.vn
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: notasquare-zero-process-manager-admin-service
+              servicePort: 80

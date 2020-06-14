@@ -1,0 +1,26 @@
+.table-field-list tbody tr td,
+.table-field-list tbody tr th,
+.table-field-list thead tr th,
+.table-field-list thead tr td,
+.table-field-list tfoot tr th,
+.table-field-list tfoot tr td {
+    border: none;
+    padding: 0px;
+}
+
+.table-field-list thead tr th:first-child,
+.table-field-list tbody tr td:first-child,
+.table-field-list tfoot tr td:first-child {
+    padding: 0px;
+}
+
+.table-field-list thead tr th:last-child,
+.table-field-list tbody tr td:last-child,
+.table-field-list tfoot tr td:last-child {
+    padding-right: 0px;
+    padding-bottom: 0px;
+}
+
+.table-field-list {
+    margin-top: 10px;
+}

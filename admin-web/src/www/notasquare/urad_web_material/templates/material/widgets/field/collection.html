@@ -1,0 +1,6 @@
+{% extends 'material/widgets/field/field.html' %}
+{% block field_widget %}
+    {% for html in row_htmls %}
+        {{ html | safe }}
+    {% endfor %}
+{% endblock %}

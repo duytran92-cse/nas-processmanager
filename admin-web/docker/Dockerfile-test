@@ -1,0 +1,7 @@
+FROM registry.novogenialab.com/notasquare-zero/images/nas-urad-admin:0.1
+
+ENV APP_ENV test
+ADD src/www /opt/www
+
+# Temporarily hack linkstatic
+ADD src/www/notasquare/urad_web_material/static/material /opt/web/static/material
